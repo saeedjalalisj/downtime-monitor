@@ -13,7 +13,7 @@ export class Users {
     unique: true,
     length: 255,
   })
-  username?: string | null;
+  username: string | null;
 
   @Column('character varying', {
     name: 'password',
