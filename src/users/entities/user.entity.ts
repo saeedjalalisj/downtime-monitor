@@ -1,4 +1,11 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  Index,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Index('users_pkey', ['id'], { unique: true })
 @Index('users_username_key', ['username'], { unique: true })
@@ -43,4 +50,10 @@ export class Users {
 
   @Column('character varying', { name: 'mobile', nullable: true, length: 255 })
   mobile?: string | null;
+
+  @BeforeInsert()
+  async hashPass() {
+    const saltRounds = 10;
+    this.password = await bcrypt.hash(this.password, saltRounds);
+  }
 }
