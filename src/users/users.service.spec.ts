@@ -26,6 +26,7 @@ describe('UsersService', () => {
           provide: getRepositoryToken(Users),
           useValue: {
             save: jest.fn().mockResolvedValue(oneUser),
+            findOne: jest.fn().mockResolvedValue(oneUser),
           },
         },
       ],
@@ -40,5 +41,10 @@ describe('UsersService', () => {
 
   it('should be save user', async () => {
     expect(await service.create(createUserDto)).toBe(oneUser);
+  });
+
+  it('should be find a user', async () => {
+    const userId = 1;
+    expect(await service.findOne(userId)).toBe(oneUser);
   });
 });
