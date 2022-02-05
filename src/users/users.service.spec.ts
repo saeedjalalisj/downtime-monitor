@@ -47,4 +47,9 @@ describe('UsersService', () => {
     const userId = 1;
     expect(await service.findOne(userId)).toBe(oneUser);
   });
+
+  it('should be find user by username', async () => {
+    const username = oneUser.username;
+    expect(await service.findByUsername(username)).toBe(oneUser);
+  });
 });
