@@ -42,7 +42,10 @@ export class Users {
   @Column('character varying', { name: 'family', nullable: true, length: 255 })
   family?: string | null;
 
-  @Column('timestamp without time zone', { name: 'created_on' })
+  @Column('timestamp without time zone', {
+    name: 'created_on',
+    default: new Date().toUTCString(),
+  })
   createdOn?: Date;
 
   @Column('boolean', { name: 'is_registered', nullable: true })
