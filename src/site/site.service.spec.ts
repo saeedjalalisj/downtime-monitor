@@ -15,4 +15,8 @@ describe('SiteService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it('should be create new site', async () => {
+
+  });
 });
