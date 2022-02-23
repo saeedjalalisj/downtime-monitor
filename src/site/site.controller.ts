@@ -1,17 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { SiteService } from './site.service';
 import { CreateSiteDto } from './dto/create-site.dto';
 import { UpdateSiteDto } from './dto/update-site.dto';
+import { User } from '../common/decorator/user.decorator';
+import { JwtAuthGuard } from '../auth/guard/jwt.guard';
 
 @Controller('site')
 export class SiteController {
   constructor(private readonly siteService: SiteService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createSiteDto: CreateSiteDto) {
-    return this.siteService.create(createSiteDto);
+  create(@Body() createSiteDto: CreateSiteDto, @User() user) {
+    return this.siteService.create(createSiteDto, user.userId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.siteService.findAll();

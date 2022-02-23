@@ -1,11 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSiteDto } from './dto/create-site.dto';
 import { UpdateSiteDto } from './dto/update-site.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Site } from './entities/site.entity';
 
 @Injectable()
 export class SiteService {
-  create(createSiteDto: CreateSiteDto) {
-    return 'This action adds a new site';
+  constructor(
+    @InjectRepository(Site) private readonly siteRepository: Repository<Site>,
+  ) {}
+  async create(createSiteDto: CreateSiteDto, userId: number) {
+    try {
+      const site = new Site();
+      site.userId = userId;
+      site.title = createSiteDto.title;
+      site.url = createSiteDto.url;
+      site.description = createSiteDto.description;
+      site.isActive = createSiteDto.isActive;
+      return await this.siteRepository.save(site);
+    } catch (err) {
+      throw err;
+    }
   }
 
   findAll() {

@@ -32,5 +32,8 @@ export class Site extends CustomBaseEntity {
   description: string;
 
   @ManyToOne(() => Users, (user) => user.sites)
-  userId: Users;
+  users: Users;
+
+  @Column()
+  userId: number;
 }

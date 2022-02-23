@@ -18,6 +18,11 @@ describe('SiteController', () => {
               .mockImplementation((createSiteDto: CreateSiteDto) =>
                 Promise.resolve({ id: 'number', ...createSiteDto }),
               ),
+            save: jest
+              .fn()
+              .mockImplementation((createSiteDto: CreateSiteDto) =>
+                Promise.resolve({ id: 'number', ...createSiteDto }),
+              ),
           },
         },
       ],
@@ -37,7 +42,8 @@ describe('SiteController', () => {
       description: 'is a new site',
       isActive: true,
     };
-    await expect(controller.create(createdSite)).resolves.toEqual({
+    const userId = 1;
+    await expect(controller.create(createdSite, userId)).resolves.toEqual({
       id: 'number',
       ...createdSite,
     });
