@@ -35,9 +35,14 @@ export class SiteController {
     return this.siteService.findOne(+id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSiteDto: UpdateSiteDto) {
-    return this.siteService.update(+id, updateSiteDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateSiteDto: UpdateSiteDto,
+    @User() user,
+  ) {
+    return this.siteService.update(+id, updateSiteDto, user.userId);
   }
 
   @Delete(':id')

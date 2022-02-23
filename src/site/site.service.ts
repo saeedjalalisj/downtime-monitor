@@ -32,8 +32,15 @@ export class SiteService {
     return `This action returns a #${id} site`;
   }
 
-  update(id: number, updateSiteDto: UpdateSiteDto) {
-    return `This action updates a #${id} site`;
+  async update(id: number, updateSiteDto: UpdateSiteDto, userId: number) {
+    try {
+      return await this.siteRepository.update(
+        { id, userId },
+        { ...updateSiteDto },
+      );
+    } catch (err) {
+      throw err;
+    }
   }
 
   remove(id: number) {

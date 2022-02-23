@@ -4,6 +4,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Site } from './entities/site.entity';
 import { Users } from '../users/entities/user.entity';
 import { CreateSiteDto } from './dto/create-site.dto';
+import { UpdateSiteDto } from './dto/update-site.dto';
 
 describe('SiteService', () => {
   let service: SiteService;
@@ -30,6 +31,7 @@ describe('SiteService', () => {
           useValue: {
             create: jest.fn().mockReturnValue(oneSite),
             save: jest.fn().mockReturnValue(oneSite),
+            update: jest.fn().mockReturnValue(true),
           },
         },
       ],
@@ -46,5 +48,14 @@ describe('SiteService', () => {
     await expect(service.create(createSideDto, userId)).resolves.toEqual(
       oneSite,
     );
+  });
+
+  it('should be update site', async () => {
+    const siteId = 1;
+    const userId = 1;
+    const updateSiteDto: UpdateSiteDto = createSideDto;
+    await expect(
+      service.update(siteId, updateSiteDto, userId),
+    ).resolves.toEqual(true);
   });
 });
