@@ -47,7 +47,11 @@ export class SiteService {
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} site`;
+  async remove(id: number, userId: number) {
+    try {
+      return await this.siteRepository.delete({ id, userId });
+    } catch (err) {
+      throw err;
+    }
   }
 }

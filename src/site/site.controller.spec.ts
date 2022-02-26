@@ -41,6 +41,11 @@ describe('SiteController', () => {
                   Promise.resolve({ id: 'number', ...updateSiteDto }),
               ),
             findAll: jest.fn().mockResolvedValue([oneSite]),
+            remove: jest
+              .fn()
+              .mockImplementation((siteId: string, userId: string) =>
+                Promise.resolve(true),
+              ),
           },
         },
       ],
@@ -86,5 +91,11 @@ describe('SiteController', () => {
 
   it('should be show sites list', async () => {
     await expect(controller.findAll()).resolves.toEqual([oneSite]);
+  });
+
+  it('it should be remove a site', async () => {
+    const siteId = '1';
+    const userId = '1';
+    await expect(controller.remove(siteId, userId)).resolves.toEqual(true);
   });
 });

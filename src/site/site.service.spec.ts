@@ -33,6 +33,7 @@ describe('SiteService', () => {
             save: jest.fn().mockReturnValue(oneSite),
             update: jest.fn().mockReturnValue(true),
             find: jest.fn().mockReturnValue([oneSite]),
+            delete: jest.fn().mockReturnValue(true),
           },
         },
       ],
@@ -61,7 +62,12 @@ describe('SiteService', () => {
   });
 
   it('should be show sites list', async () => {
-    await expect(service.findAll()).resolves.toEqual([oneSite])
+    await expect(service.findAll()).resolves.toEqual([oneSite]);
   });
 
+  it('it should be remove a site', async () => {
+    const siteId = 1;
+    const userId = 1;
+    await expect(service.remove(siteId, userId)).resolves.toEqual(true);
+  });
 });
