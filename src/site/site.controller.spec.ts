@@ -6,6 +6,16 @@ import { UpdateSiteDto } from './dto/update-site.dto';
 
 describe('SiteController', () => {
   let controller: SiteController;
+  const oneSite = {
+    createdAt: undefined,
+    id: 0,
+    updatedAt: undefined,
+    userId: 0,
+    title: 'new site',
+    url: 'http://localhost',
+    description: 'is a new site',
+    isActive: true,
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -30,6 +40,7 @@ describe('SiteController', () => {
                 (siteId, updateSiteDto: UpdateSiteDto, userId) =>
                   Promise.resolve({ id: 'number', ...updateSiteDto }),
               ),
+            findAll: jest.fn().mockResolvedValue([oneSite]),
           },
         },
       ],
@@ -56,7 +67,7 @@ describe('SiteController', () => {
     });
   });
 
-  it('shuold be update user', async () => {
+  it('should be update user', async () => {
     const updateSiteDto: UpdateSiteDto = {
       title: 'new site',
       url: 'http://localhost',
@@ -71,5 +82,9 @@ describe('SiteController', () => {
       id: 'number',
       ...updateSiteDto,
     });
+  });
+
+  it('should be show sites list', async () => {
+    await expect(controller.findAll()).resolves.toEqual([oneSite]);
   });
 });

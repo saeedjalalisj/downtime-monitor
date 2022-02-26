@@ -24,8 +24,12 @@ export class SiteService {
     }
   }
 
-  findAll() {
-    return `This action returns all site`;
+  async findAll(): Promise<Site[]> {
+    try {
+      return await this.siteRepository.find();
+    } catch (err) {
+      throw err;
+    }
   }
 
   findOne(id: number) {

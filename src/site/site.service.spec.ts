@@ -32,6 +32,7 @@ describe('SiteService', () => {
             create: jest.fn().mockReturnValue(oneSite),
             save: jest.fn().mockReturnValue(oneSite),
             update: jest.fn().mockReturnValue(true),
+            find: jest.fn().mockReturnValue([oneSite]),
           },
         },
       ],
@@ -58,4 +59,9 @@ describe('SiteService', () => {
       service.update(siteId, updateSiteDto, userId),
     ).resolves.toEqual(true);
   });
+
+  it('should be show sites list', async () => {
+    await expect(service.findAll()).resolves.toEqual([oneSite])
+  });
+
 });
