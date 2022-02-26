@@ -3,14 +3,17 @@ import {
   Column,
   Entity,
   Index,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Site } from '../../site/entities/site.entity';
+import { CustomBaseEntity } from '../../common/entity/custom-base.entity';
 
 @Index('users_pkey', ['id'], { unique: true })
 @Index('users_username_key', ['username'], { unique: true })
 @Entity('users', { schema: 'public' })
-export class Users {
+export class Users extends CustomBaseEntity {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
   id?: number;
 
@@ -59,4 +62,7 @@ export class Users {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
+
+  @OneToMany(() => Site, (site) => site.userId)
+  sites: Site[];
 }
